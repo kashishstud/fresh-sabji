@@ -1,0 +1,105 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fresh Sabji - Admin Login</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f7ed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .login-box {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px #cccccc;
+            width: 300px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #218838;
+        }
+
+        input {
+            width: 90%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #218838;
+            color: white;
+            border: none;
+            border-radius: 7px;
+            cursor: pointer;
+        }
+
+        #message {
+            margin-top: 15px;
+            color: #c0392b;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-box">
+        <h1>🥬 Fresh Sabji</h1>
+        <h3>Admin Login</h3>
+
+        <form id="loginForm">
+            <input
+                type="text"
+                id="username"
+                placeholder="Admin Username"
+                required
+            >
+
+            <input
+                type="password"
+                id="password"
+                placeholder="Password"
+                required
+            >
+
+            <button type="submit">Login</button>
+        </form>
+
+        <p id="message"></p>
+    </div>
+
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+            const message = document.getElementById("message");
+
+            if (username === "admin" && password === "1234") {
+                message.style.color = "green";
+                message.textContent = "Login successful!";
+
+           window.location.herf="dashboard.html";
+            } else {
+                message.style.color = "red";
+                message.textContent = "Incorrect username or password.";
+            }
+        });
+    </script>
+</body>
+</html>
+```

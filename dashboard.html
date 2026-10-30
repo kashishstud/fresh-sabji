@@ -1,0 +1,148 @@
+ ```html
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fresh Sabji - Admin Dashboard</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f7ed;
+            margin: 0;
+            padding: 20px;
+        }
+
+        header {
+            background: #218838;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px 5px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        input {
+            width: 75px;
+            padding: 8px;
+        }
+
+        button {
+            background: #218838;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        #message {
+            color: #218838;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>🥬 Fresh Sabji</h1>
+        <p>Admin Dashboard</p>
+    </header>
+
+    <div class="container">
+        <h2>Manage Vegetable Prices</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>सब्जी</th>
+                    <th>कीमत (₹/kg)</th>
+                </tr>
+            </thead>
+
+            <tbody id="productList"></tbody>
+        </table>
+
+        <button onclick="savePrices()">Save Prices</button>
+
+        <p id="message"></p>
+    </div>
+
+    <script>
+        const defaultProducts = [
+            { name: "आलू", price: 20 },
+            { name: "टमाटर", price: 30 },
+            { name: "प्याज", price: 35 },
+            { name: "गोभी", price: 25 },
+            { name: "भिंडी", price: 40 }
+        ];
+
+        let products;
+
+        try {
+            products = JSON.parse(localStorage.getItem("freshSabjiProducts")) || defaultProducts;
+        } catch {
+            products = defaultProducts;
+        }
+
+        function displayProducts() {
+            const list = document.getElementById("productList");
+            list.innerHTML = "";
+
+            products.forEach((product, index) => {
+                list.innerHTML += `
+                    <tr>
+                        <td>${product.name}</td>
+                        <td>
+                            <input type="number" min="1" step="0.01"
+                                id="price-${index}" value="${product.price}">
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function savePrices() {
+            for (let i = 0; i < products.length; i++) {
+                const price = Number(document.getElementById("price-" + i).value);
+
+                if (!Number.isFinite(price) || price <= 0) {
+                    document.getElementById("message").textContent =
+                        "कृपया हर सब्जी की सही कीमत डालें।";
+                    return;
+                }
+
+                products[i].price = price;
+            }
+
+            localStorage.setItem("freshSabjiProducts", JSON.stringify(products));
+
+            document.getElementById("message").textContent =
+                "कीमतें इस ब्राउज़र में सेव हो गई हैं!";
+        }
+
+        displayProducts();
+    </script>
+</body>
+</html>
+```

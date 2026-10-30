@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Fresh Sabji — Online Vegetable Store</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f7fbea;
+            color: #263b25;
+        }
+
+        header {
+            background: #176b35;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        nav {
+            background: #e5f3a5;
+            padding: 14px;
+            text-align: center;
+        }
+
+        nav a {
+            color: #176b35;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 0 12px;
+        }
+
+        .hero {
+            background: linear-gradient(120deg, #d9f99d, #fff3a6);
+            text-align: center;
+            padding: 45px 20px;
+        }
+
+        .hero h2 {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .hero p {
+            font-size: 17px;
+            line-height: 1.7;
+        }
+
+        .section {
+            padding: 35px 20px;
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        .section h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #176b35;
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 20px;
+        }
+
+        .product {
+            background: white;
+            border-radius: 14px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 3px 12px #00000012;
+        }
+
+        .product img {
+            width: 100%;
+            height: 145px;
+            object-fit: contain;
+            margin-bottom: 12px;
+        }
+
+        .product h3 {
+            margin-bottom: 10px;
+        }
+
+        .price {
+            color: #176b35;
+            font-weight: bold;
+            margin-bottom: 14px;
+        }
+
+        button {
+            background: #176b35;
+            color: white;
+            border: none;
+            padding: 11px 17px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        button:hover {
+            background: #0e4e25;
+        }
+
+        .cart-box, .order-box {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            margin-top: 20px;
+            box-shadow: 0 3px 12px #00000010;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .quantity-buttons button {
+            padding: 5px 10px;
+            margin: 0 3px;
+        }
+
+        .total {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0 15px;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+            font-size: 15px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        .notice {
+            background: #fff4bf;
+            padding: 12px;
+            border-radius: 7px;
+            margin: 15px 0;
+            line-height: 1.5;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        footer {
+            background: #176b35;
+            color: white;
+            text-align: center;
+            padding: 22px;
+            margin-top: 30px;
+            line-height: 1.8;
+        }
+
+        @media (max-width: 500px) {
+            header h1 {
+                font-size: 25px;
+            }
+
+            .hero h2 {
+                font-size: 25px;
+            }
+
+            nav a {
+                display: inline-block;
+                margin: 6px;
+            }
+
+            .cart-item {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>🌿 Fresh Sabji</h1>
+        <p>Online Vegetable Store | ऑनलाइन सब्ज़ी स्टोर</p>
+    </header>
+
+    <nav>
+        <a href="#home">Home / होम</a>
+        <a href="#vegetables">Vegetables / सब्ज़ियाँ</a>
+        <a href="#cart">My Cart / मेरी टोकरी</a>
+        <a href="#about">About / हमारे बारे में</a>
+    </nav>
+
+    <section class="hero" id="home">
+        <h2>ताज़ी सब्ज़ियाँ, आपके घर तक!</h2>
+        <p>
+            Fresh Vegetables Delivered to Your Doorstep<br>
+            अपने गाँव और आसपास के क्षेत्रों के लिए ऑनलाइन सब्ज़ी ऑर्डर करें।
+        </p>
+    </section>
+
+    <section class="section" id="vegetables">
+        <h2>🥕 Our Vegetables | हमारी सब्ज़ियाँ</h2>
+
+        <div class="notice">
+            ध्यान दें: नीचे दिए गए भाव केवल उदाहरण के लिए हैं।
+            असली बिक्री शुरू करने से पहले अपने स्थानीय बाज़ार के अनुसार भाव बदलें।
+            <br>
+            Demo prices only. Update prices before accepting real orders.
+        </div>
+
+        <div class="products" id="productList"></div>
+    </section>
+
+    <section class="section" id="cart">
+        <h2>🛒 My Shopping Cart | मेरी टोकरी</h2>
+
+        <div class="cart-box">
+            <div id="cartItems">
+                <p>आपकी टोकरी अभी खाली है।</p>
+            </div>
+
+            <div class="total" id="cartTotal">
+                Total / कुल: ₹0
+            </div>
+
+            <button onclick="showCheckout()">
+                Proceed to Order / ऑर्डर करें
+            </button>
+        </div>
+
+        <div class="order-box hidden" id="checkout">
+            <h2>Delivery Details | डिलीवरी की जानकारी</h2>
+
+            <form id="orderForm">
+                <label for="customerName">आपका नाम / Your Name</label>
+                <input
+                    type="text"
+                    id="customerName"
+                    required
+                    placeholder="अपना नाम लिखें"
+                >
+
+                <label for="customerPhone">मोबाइल नंबर / Mobile Number</label>
+                <input
+                    type="tel"
+                    id="customerPhone"
+                    required
+                    pattern="[0-9]{10}"
+                    maxlength="10"
+                    placeholder="10 अंकों का मोबाइल नंबर"
+                >
+
+                <label for="customerAddress">डिलीवरी का पता / Delivery Address</label>
+                <textarea
+                    id="customerAddress"
+                    required
+                    rows="3"
+                    placeholder="गाँव, मोहल्ला और डिलीवरी की जानकारी"
+                ></textarea>
+
+                <button type="submit">
+                    Confirm Order / ऑर्डर पक्का करें
+                </button>
+            </form>
+        </div>
+
+        <div class="order-box hidden" id="confirmation" aria-live="polite">
+            <h2>✅ Order Summary | ऑर्डर की जानकारी</h2>
+            <div id="confirmationDetails"></div>
+
+            <p class="notice">
+                यह अभी एक डेमो ऑर्डर है। ऑर्डर अपने-आप किसी दुकान तक नहीं पहुँचता।
+                WhatsApp से भेजने के लिए नीचे दिए गए कोड में बिज़नेस नंबर सेट करना होगा।
+            </p>
+
+            <button onclick="sendWhatsAppOrder()">
+                Send via WhatsApp / WhatsApp पर भेजें
+            </button>
+        </div>
+    </section>
+
+    <section class="section" id="about">
+        <h2>About Us | हमारे बारे में</h2>
+
+        <p style="text-align:center; line-height:1.9;">
+            Fresh Sabji का उद्देश्य गाँव और आसपास के क्षेत्रों में
+            सब्ज़ियाँ ऑर्डर करना आसान बनाना है।<br>
+            Our goal is to make ordering vegetables simple and convenient.
+        </p>
+    </section>
+
+    <footer>
+        <h3>🌿 Fresh Sabji — Online Vegetable Store</h3>
+        <p>Freshness for Every Home | हर घर तक ताज़गी</p>
+        <p>Delivery availability will depend on your service area.</p>
+        <p>© 2026 Fresh Sabji</p>
+    </footer>
+
+    <script>
+        // Demo vegetable list and prices.
+        // Change these prices to your real selling prices before launch.
+
+        const vegetables = [
+            {
+                id: 1,
+                name: "आलू / Potato",
+                price: 30,
+                unit: "kg",
+                image: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=400&q=80"
+            },
+            {
+                id: 2,
+                name: "टमाटर / Tomato",
+                price: 40,
+                unit: "kg",
+                image: "https://images.unsplash.com/photo-1546094096-0df4bcaaa337?auto=format&fit=crop&w=400&q=80"
+            },
+            {
+                id: 3,
+                name: "गाजर / Carrot",
+                price: 50,
+                unit: "kg",
+                image: "https://images.unsplash.com/photo-1445282768818-728615cc910a?auto=format&fit=crop&w=400&q=80"
+            },
+            {
+                id: 4,
+                name: "प्याज़ / Onion",
+                price: 35,
+                unit: "kg",
+                image: "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=400&q=80"
+            },
+            {
+                id: 5,
+                name: "फूलगोभी / Cauliflower",
+                price: 40,
+                unit: "piece",
+                image: "https://images.unsplash.com/photo-1568584711075-3d021a7c3ca3?auto=format&fit=crop&w=400&q=80"
+            },
+            {
+                id: 6,
+                name: "खीरा / Cucumber",
+                price: 30,
+                unit: "kg",
+                image: "https://images.unsplash.com/photo-1604977042946-1eecc30f269e?auto=format&fit=crop&w=400&q=80"
+            }
+        ];
+
+        const cart = {};
+        let latestOrder = null;
+
+        function renderProducts() {
+            const productList = document.getElementById("productList");
+
+            productList.innerHTML = vegetables.map(item => `
+                <div class="product">
+                    <img
+                        src="${item.image}"
+                        alt="${item.name}"
+                        loading="lazy"
+                    >
+                    <h3>${item.name}</h3>
+                    <p class="price">₹${item.price} / ${item.unit}</p>
+                    <button onclick="addToCart(${item.id})">
+                        Add to Cart / टोकरी में डालें
+                    </button>
+                </div>
+            `).join("");
+        }
+
+        function addToCart(id) {
+            if (!cart[id]) {
+                cart[id] = 0;
+            }
+
+            cart[id] += 1;
+            renderCart();
+        }
+
+        function changeQuantity(id, amount) {
+            cart[id] = (cart[id] || 0) + amount;
+
+            if (cart[id] <= 0) {
+                delete cart[id];
+            }
+
+            renderCart();
+        }
+
+        function getCartTotal() {
+            return vegetables.reduce((total, item) => {
+                return total + item.price * (cart[item.id] || 0);
+            }, 0);
+        }
+
+        function renderCart() {
+            const cartItems = document.getElementById("cartItems");
+            const entries = vegetables.filter(item => cart[item.id] > 0);
+
+            if (entries.length === 0) {
+                cartItems.innerHTML = "<p>आपकी टोकरी अभी खाली है।</p>";
+            } else {
+                cartItems.innerHTML = entries.map(item => `
+                    <div class="cart-item">
+                        <div>
+                            <strong>${item.name}</strong><br>
+                            ₹${item.price} × ${cart[item.id]} ${item.unit}
+                            = ₹${item.price * cart[item.id]}
+                        </div>
+
+                        <div class="quantity-buttons">
+                            <button
+                                onclick="changeQuantity(${item.id}, -1)"
+                                aria-label="Decrease quantity"
+                            >−</button>
+
+                            <strong>${cart[item.id]}</strong>
+
+                            <button
+                                onclick="changeQuantity(${item.id}, 1)"
+                                aria-label="Increase quantity"
+                            >+</button>
+                        </div>
+                    </div>
+                `).join("");
+            }
+
+            document.getElementById("cartTotal").textContent =
+                "Total / कुल: ₹" + getCartTotal();
+        }
+
+        function showCheckout() {
+            if (getCartTotal() === 0) {
+                alert("पहले टोकरी में सब्ज़ियाँ जोड़ें। Please add vegetables first.");
+                return;
+            }
+
+            document.getElementById("checkout").classList.remove("hidden");
+            document.getElementById("checkout").scrollIntoView({
+                behavior: "smooth"
+            });
+        }
+
+        document.getElementById("orderForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            if (getCartTotal() === 0) {
+                alert("आपकी टोकरी खाली है।");
+                return;
+            }
+
+            const name = document.getElementById("customerName").value.trim();
+            const phone = document.getElementById("customerPhone").value.trim();
+            const address = document.getElementById("customerAddress").value.trim();
+
+            latestOrder = {
+                name,
+                phone,
+                address,
+                items: vegetables
+                    .filter(item => cart[item.id] > 0)
+                    .map(item => ({
+                        name: item.name,
+                        quantity: cart[item.id],
+                        unit: item.unit,
+                        price: item.price,
+                        subtotal: item.price * cart[item.id]
+                    })),
+                total: getCartTotal()
+            };
+
+            const itemLines = latestOrder.items.map(item =>
+                `<p>${item.name} — ${item.quantity} ${item.unit}: ₹${item.subtotal}</p>`
+            ).join("");
+
+            document.getElementById("confirmationDetails").innerHTML = `
+                <p><strong>नाम / Name:</strong> ${escapeHTML(name)}</p>
+                <p><strong>मोबाइल / Mobile:</strong> ${escapeHTML(phone)}</p>
+                <p><strong>पता / Address:</strong> ${escapeHTML(address)}</p>
+                <hr style="margin:12px 0">
+                ${itemLines}
+                <h3 style="margin-top:15px">कुल / Total: ₹${latestOrder.total}</h3>
+            `;
+
+            document.getElementById("confirmation").classList.remove("hidden");
+            document.getElementById("confirmation").scrollIntoView({
+                behavior: "smooth"
+            });
+        });
+
+        function escapeHTML(value) {
+            return value.replace(/[&<>"']/g, function(character) {
+                const replacements = {
+                    "&": "&amp;",
+                    "<": "&lt;",
+                    ">": "&gt;",
+                    '"': "&quot;",
+                    "'": "&#39;"
+                };
+
+                return replacements[character];
+            });
+        }
+
+        function sendWhatsAppOrder() {
+            if (!latestOrder) {
+                alert("पहले ऑर्डर की जानकारी भरें।");
+                return;
+            }
+
+            // Replace this example number with your business WhatsApp number.
+            // Use country code + number, without +, spaces, or dashes.
+            const businessWhatsAppNumber = "919536267314";
+
+            if (!/^91\d{10}$/.test(businessWhatsAppNumber)) {
+                alert(
+                    "WhatsApp order शुरू करने के लिए code में अपना business WhatsApp number सेट करें।"
+                );
+                return;
+            }
+
+            const message = [
+                "Fresh Sabji — New Order",
+                "Name: " + latestOrder.name,
+                "Phone: " + latestOrder.phone,
+                "Address: " + latestOrder.address,
+                "",
+                ...latestOrder.items.map(item =>
+                    item.name + " — " + item.quantity + " " +
+                    item.unit + " = ₹" + item.subtotal
+                ),
+                "",
+                "Total: ₹" + latestOrder.total
+            ].join("\n");
+
+            const url =
+                "https://wa.me/" +
+                businessWhatsAppNumber +
+                "?text=" +
+                encodeURIComponent(message);
+
+            window.open(url, "_blank", "noopener,noreferrer");
+        }
+
+        renderProducts();
+        renderCart();
+    </script><script src="cart.js"></script>
+
+
+
+</body>
+</html>
